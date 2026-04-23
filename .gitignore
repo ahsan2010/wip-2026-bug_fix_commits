@@ -1,0 +1,4 @@
+# remove specific folder using .gitignore
+
+# remove the output folder
+output/ 
