@@ -1,0 +1,72 @@
+# Adding github ssh key
+Step 1) First check your existing ssh key.  
+
+By default, the filenames of supported public keys for GitHub are one
+of the following.
+	id_rsa.pub
+	id_ecdsa.pub
+	id_ed25519.pub
+
+#If you did not find the key file, you need to generate it.
+
+Command to generate a ssh key:
+
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# here -t signifies the type. ed25519 specifies the crytographic algorith used
+#for theky. This is currently the recommended standard/
+
+
+
+Step 2) Now, you have the ssh key. You need to add it to the github. So,
+first, you need to copy the content of the key.
+
+cat ~/.ssh/id_25519.pub | xclip -selection clipboard
+
+Now add the copied key of the clipboard to Github.
+
+- In the upper-right corner of any page on GitHub, click your profile picture, then click  Settings.
+- In the "Access" section of the sidebar, click  SSH and GPG keys.
+- Click New SSH key or Add SSH key.
+- In the "Title" field, add a descriptive label for the new key. For example, if you're using a personal laptop, you might call this key "Personal laptop".
+- Select the type of key, either authentication or signing. For more information about commit signing, see About commit signature verification.
+- In the "Key" field, paste your public key.
+- Click Add SSH key.
+- If prompted, confirm access to your account on GitHub.
+
+Step 3) You may also need to make the Github hosts as known hosts.
+Go to this website and copy all the verified Github hosts: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
+
+You can add the following ssh key entries to your ~/.ssh/known_hosts file to avoid manually verifying GitHub hosts:
+
+Step 4) Now, test your ssh connection.
+
+ssh -T git@github.com
+# Attempts to ssh to GitHub
+
+Verify that the fingerprint in the message you see matches GitHub's public key fingerprint. If it does, then type yes:
+
+> Hi USERNAME! You've successfully authenticated, but GitHub does not
+> provide shell access.
+
+Finally, you can now connect to GitHub.
+
+Step 4) You need to configure your git repository so it connects now using
+github ssh instead of github URL.
+
+git remote set-url origin github_ssh 
+
+Replace github_ssh with your Github ssh url. (You will find this ssh to your Github
+repository ssh URL)
+
+Now, you can use "git push" for upstreaming.
+
+
+
+
+
+============================================================================================================================
+
+
+
+
