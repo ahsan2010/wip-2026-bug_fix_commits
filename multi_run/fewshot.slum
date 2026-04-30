@@ -1,0 +1,35 @@
+#!/bin/bash
+#SBATCH --job-name=few_com_can_1_5   # job name
+#SBATCH --gres=gpu:h100:4       # request 4 H100 GPUs
+#SBATCH --mem=256G              # memory request
+#SBATCH --cpus-per-task=16      # CPU threads per task
+#SBATCH --time=2:00:00          # walltime
+#SBATCH --output=../output/run_model_1_data_5
+
+# -----------------------------------------------------
+# Load Python and activate virtual environment
+# -----------------------------------------------------
+
+module load python/3.11 cuda/12.6
+source ~/ahsan_env_3_11/bin/activate
+
+# -----------------------------------------------------
+# Offline + Stability Settings
+# -----------------------------------------------------
+
+export HF_HOME=~/scratch/models
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+export OMP_NUM_THREADS=16
+
+# Temporary directory
+
+export TMPDIR=/home/ahsan/scratch/tmp
+mkdir -p $TMPDIR
+
+# -----------------------------------------------------
+# Run your Python script
+# -----------------------------------------------------
+
+python -u fewshot_compute_canada_5.py
+
